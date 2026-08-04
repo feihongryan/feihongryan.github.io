@@ -5,4 +5,4 @@
 
 - [笔记合集](notes/README.md)
   - [Ollama](notes/ollama.md)
-  - [Markdown集合](NOTES/Markdown.md)
+  - [Markdown集合](notes/Markdown.md)
