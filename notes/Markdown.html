@@ -35,10 +35,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-eea30b75.js";
+            window.path_to_searchindex_js = "../searchindex-943fd8fc.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-cfaf4416.js"></script>
+        <script src="../toc-e660857a.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -174,8 +174,184 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="markdown集合"><a class="header" href="#markdown集合">Markdown集合</a></h1>
+                        <hr>
+<h2 id="-一基础语法"><a class="header" href="#-一基础语法">📝 一、基础语法</a></h2>
+<h3 id="1-标题"><a class="header" href="#1-标题">1. 标题</a></h3>
+<p>markdown</p>
+<pre><code class="language-markdown"># 一级标题
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题
+</code></pre>
+<h3 id="2-段落与换行"><a class="header" href="#2-段落与换行">2. 段落与换行</a></h3>
+<pre><code class="language-markdown">这是一个普通段落。
 
+这是第二行，注意前面没有空格。
+</code></pre>
+<h3 id="3-强调与删除线"><a class="header" href="#3-强调与删除线">3. 强调与删除线</a></h3>
+<pre><code class="language-markdown">**加粗文本**
+*斜体文本*
+***加粗斜体文本***
+~~删除线文本~~
+</code></pre>
+<p><strong>加粗文本</strong>
+<em>斜体文本</em>
+<em><strong>加粗斜体文本</strong></em>
+<del>删除线文本</del></p>
+<h3 id="4-列表"><a class="header" href="#4-列表">4. 列表</a></h3>
+<h4 id="无序列表"><a class="header" href="#无序列表">无序列表</a></h4>
+<pre><code class="language-markdown">- 项目1
+- 项目2
+  - 子项目1
+  - 子项目2
+</code></pre>
+<ul>
+<li>项目1</li>
+<li>项目2
+<ul>
+<li>子项目1</li>
+<li>子项目2</li>
+</ul>
+</li>
+</ul>
+<h4 id="有序列表"><a class="header" href="#有序列表">有序列表</a></h4>
+<pre><code class="language-markdown">1. 第一项
+2. 第二项
+3. 第三项
+</code></pre>
+<ol>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ol>
+<h3 id="5-链接与图片"><a class="header" href="#5-链接与图片">5. 链接与图片</a></h3>
+<pre><code class="language-markdown">[链接文本](https://example.com)
+![替代文本](https://example.com/image.jpg)
+</code></pre>
+<p><a href="https://example.com">链接文本</a>
+<label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="https://example.com/image.jpg" alt="替代文本"><span class="img-wrapper"><img src="https://example.com/image.jpg" alt="替代文本"></span></label></p>
+<h3 id="6-分隔符"><a class="header" href="#6-分隔符">6. 分隔符</a></h3>
+<pre><code class="language-markdown">---
+</code></pre>
+<hr>
+<pre><code class="language-markdown">## 📌 二、代码与数学公式
+
+### 1. 代码块
+
+
+
+</code></pre>
+<pre><code class="language-python">def hello():
+    print("Hello, Markdown!")
+</code></pre>
+<h3 id="2-内联代码"><a class="header" href="#2-内联代码">2. 内联代码</a></h3>
+<pre><code class="language-markdown">这是内联代码：`print("Hello")`
+</code></pre>
+<pre><code>
+### 2. 内联代码
+```markdown
+这是内联代码：`print("Hello")`
+</code></pre>
+<h3 id="3-数学公式latex"><a class="header" href="#3-数学公式latex">3. 数学公式（LaTeX）</a></h3>
+<pre><code class="language-markdown">$$
+E = mc^2
+$$
+</code></pre>
+<hr>
+<h2 id="-三表格"><a class="header" href="#-三表格">📁 三、表格</a></h2>
+<pre><code class="language-markdown">| 列1 | 列2 | 列3 |
+|-----|-----|-----|
+| 数据1 | 数据2 | 数据3 |
+| 数据4 | 数据5 | 数据6 |
+</code></pre>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>列1</th><th>列2</th><th>列3</th></tr>
+</thead>
+<tbody>
+<tr><td>数据1</td><td>数据2</td><td>数据3</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="-四引用与块引用"><a class="header" href="#-四引用与块引用">📄 四、引用与块引用</a></h2>
+<pre><code class="language-markdown">&gt; 这是一个块引用。
+&gt; 它可以跨越多行。
+
+这是普通段落。
+</code></pre>
+<blockquote>
+<p>这是一个块引用。
+它可以跨越多行。</p>
+</blockquote>
+<p>这是普通段落。</p>
+<hr>
+<h2 id="-五其他功能"><a class="header" href="#-五其他功能">📈 五、其他功能</a></h2>
+<h3 id="1-转义字符"><a class="header" href="#1-转义字符">1. 转义字符</a></h3>
+<pre><code class="language-markdown">\*星号\* 会被转义为 *星号*
+</code></pre>
+<p>*星号* 会被转义为 <em>星号</em></p>
+<h3 id="2-自定义标题id"><a class="header" href="#2-自定义标题id">2. 自定义标题ID</a></h3>
+<pre><code class="language-markdown">## 标题 {#custom-id}
+</code></pre>
+<h2 id="custom-id"><a class="header" href="#custom-id">标题</a></h2>
+<h3 id="3-任务列表"><a class="header" href="#3-任务列表">3. 任务列表</a></h3>
+<pre><code class="language-markdown">- [ ] 未完成的任务
+- [x] 已完成的任务
+</code></pre>
+<ul>
+<li><input disabled="" type="checkbox"> 未完成的任务</li>
+<li><input disabled="" type="checkbox" checked=""> 已完成的任务</li>
+</ul>
+<hr>
+<h2 id="-六高级技巧"><a class="header" href="#-六高级技巧">🧠 六、高级技巧</a></h2>
+<h3 id="1-语法高亮需配合代码块"><a class="header" href="#1-语法高亮需配合代码块">1. 语法高亮（需配合代码块）</a></h3>
+<pre><code class="language-markdown">```python
+for i in range(10):
+    print(i)
+</code></pre>
+<pre><code class="language-python">for i in range(10):
+    print(i)
+</code></pre>
+<h3 id="2-多语言支持"><a class="header" href="#2-多语言支持">2. 多语言支持</a></h3>
+<pre><code class="language-markdown">```javascript
+console.log("Hello, Markdown!");
+</code></pre>
+<pre><code class="language-javascript">console.log("Hello, Markdown!");
+</code></pre>
+<h3 id="3-自动链接"><a class="header" href="#3-自动链接">3. 自动链接</a></h3>
+<pre><code class="language-markdown">```
+[https://example.com](https://example.com)
+```
+
+
+```markdown
+[https://example.com](https://example.com)
+</code></pre>
+<hr>
+<h2 id="-常见问题"><a class="header" href="#-常见问题">📌 常见问题</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>问题</th><th>解决方案</th></tr>
+</thead>
+<tbody>
+<tr><td>为什么代码块没有高亮？</td><td>确保使用支持语法高亮的编辑器（如 VS Code、Typora）</td></tr>
+<tr><td>如何添加图片？</td><td>使用 <code>![替代文本](图片链接)</code> 格式</td></tr>
+<tr><td>如何让列表项缩进？</td><td>在列表项前添加空格（如 <code>- 子项</code>）</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="-参考文档"><a class="header" href="#-参考文档">📚 参考文档</a></h2>
+<ul>
+<li><a href="https://commonmark.org/">Markdown 官方语法指南</a></li>
+<li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Here-API-Specification">GitHub Flavoured Markdown</a></li>
+</ul>
+<hr>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
