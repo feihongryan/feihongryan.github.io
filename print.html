@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-943fd8fc.js";
+            window.path_to_searchindex_js = "searchindex-b5406f77.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-e660857a.js"></script>
+        <script src="toc-cb087528.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -176,8 +176,10 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="简介"><a class="header" href="#简介">简介</a></h1>
-<p>Hello!</p>
-<p>这是我的个人网站，将发布相关成果与文献，学习笔记等动态</p>
+<p><strong>Hello!</strong></p>
+<h1 id="这是我的个人网站将发布相关成果与文献学习笔记等动态"><a class="header" href="#这是我的个人网站将发布相关成果与文献学习笔记等动态">这是我的个人网站，将发布相关成果与文献，学习笔记等动态</a></h1>
+<hr>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="images/猫猫.jpg" alt="猫猫"><span class="img-wrapper"><img src="images/猫猫.jpg" alt="猫猫"></span></label></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="关于流程"><a href="#关于流程" class="header">关于流程</a></h1>
 <p>#关于流程</p>
@@ -194,101 +196,8 @@ git commit -m "更新文档内容"
 git push origin main
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="笔记合集"><a href="#笔记合集" class="header">笔记合集</a></h1>
-<p>笔记合集</p>
-<div style="break-before: page; page-break-before: always;"></div>
-<h1 id="mac本地大模型ollama命令"><a class="header" href="#mac本地大模型ollama命令">mac本地大模型ollama命令</a></h1>
-<p>一、基础完整流程（日常标准操作）</p>
-<ol>
-<li>确认后台服务开启（只需开机执行一次）</li>
-</ol>
-<pre><code class="language-zsh">brew services start ollama
-</code></pre>
-<p>关闭服务：</p>
-<pre><code class="language-zsh">brew services stop ollama
-</code></pre>
-<ol start="2">
-<li>进入交互式对话（最常用）</li>
-</ol>
-<pre><code class="language-zsh">ollama run qwen3:8b
-</code></pre>
-<p>出现 &gt;&gt;&gt; 就可以持续聊天</p>
-<p>• /bye 退出对话，释放模型内存</p>
-<p>• /help 查看终端内置指令</p>
-<ol start="3">
-<li>单次提问（不进入持续对话，用完立刻释放）</li>
-</ol>
-<pre><code class="language-zsh">ollama run qwen3:8b "大一医学生如何联系导师进课题组"
-</code></pre>
-<p>二、高频日常终端命令整理</p>
-<p>📦 模型管理
-查看本地所有已下载模型</p>
-<pre><code class="language-zsh">ollama list
-</code></pre>
-<p>下载模型</p>
-<pre><code class="language-zsh">ollama pull qwen3:8b
-</code></pre>
-<p>删除模型（释放硬盘）</p>
-<pre><code class="language-zsh">ollama rm qwen3:8b
-</code></pre>
-<p>查看模型参数信息</p>
-<pre><code class="language-zsh">ollama show qwen3:8b
-</code></pre>
-<p>⚙️ 运行监控
-查看当前正在加载运行的模型</p>
-<pre><code class="language-zsh">ollama ps
-</code></pre>
-<p>停止正在运行的模型，立刻回收内存</p>
-<pre><code class="language-zsh">ollama stop qwen3:8b
-</code></pre>
-<p>三、两种启动模式区别（重点区分，避免混乱）</p>
-<ol>
-<li>
-<p>brew services start ollama
-✅ 后台常驻服务，关闭终端服务依然运行，推荐日常使用</p>
-</li>
-<li>
-<p>ollama serve
-前台运行服务，关掉终端窗口服务直接终止，仅用于调试，不要日常用</p>
-</li>
-</ol>
-<p>四、适合你16G Mac：带内存优化临时启动</p>
-<p>如果你不想用brew常驻，前台启动带上优化参数：
-OLLAMA_FLASH_ATTENTION=“1” OLLAMA_KV_CACHE_TYPE=“q8_0” ollama serve
-五、实用小技巧</p>
-<ol>
-<li>不要长期挂着模型占用内存
-不用AI时执行：
-ollama stop qwen3:8b</li>
-<li>想直接把回答保存成文本
-ollama run qwen3:8b “总结噬菌体癌症治疗进展” &gt; answer.txt
-六、最简日常工作流（直接照抄使用）
-开机首次执行</li>
-</ol>
-<pre><code class="language-zsh">brew services start ollama
-</code></pre>
-<p>开启对话</p>
-<pre><code class="language-zsh">ollama run qwen3:8b
-</code></pre>
-<p>使用完毕退出对话</p>
-<blockquote>
-<p>/bye</p>
-</blockquote>
-<h1 id="长时间不用释放模型内存"><a class="header" href="#长时间不用释放模型内存">长时间不用，释放模型内存</a></h1>
-<pre><code class="language-zsh">ollama stop qwen3:8b
-</code></pre>
-<ol>
-<li>
-<p>所有模型文件默认存放路径（Mac Apple Silicon）
-~/.ollama/models</p>
-</li>
-<li>
-<p>如果局域网平板/手机访问本机AI，我可以给你局域网开放配置指令；</p>
-</li>
-<li>
-<p>OpenWebUI下载模型 ≡ ollama pull，图形界面操作不需要敲命令。</p>
-</li>
-</ol>
+<h1 id="通用笔记合集"><a href="#通用笔记合集" class="header">通用笔记合集</a></h1>
+<h2 id="所谓通用笔记就是杂七杂八却又不得不记"><a class="header" href="#所谓通用笔记就是杂七杂八却又不得不记">所谓通用笔记，就是杂七杂八却又不得不记</a></h2>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="markdown集合"><a href="#markdown集合" class="header">Markdown集合</a></h1>
 <hr>
@@ -468,7 +377,113 @@ console.log("Hello, Markdown!");
 <li><a href="https://commonmark.org/">Markdown 官方语法指南</a></li>
 <li><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Here-API-Specification">GitHub Flavoured Markdown</a></li>
 </ul>
+<hr><div style="break-before: page; page-break-before: always;"></div>
+<h1 id="mac本地大模型ollama命令"><a class="header" href="#mac本地大模型ollama命令">mac本地大模型ollama命令</a></h1>
+<p>一、基础完整流程（日常标准操作）</p>
+<ol>
+<li>确认后台服务开启（只需开机执行一次）</li>
+</ol>
+<pre><code class="language-zsh">brew services start ollama
+</code></pre>
+<p>关闭服务：</p>
+<pre><code class="language-zsh">brew services stop ollama
+</code></pre>
+<ol start="2">
+<li>进入交互式对话（最常用）</li>
+</ol>
+<pre><code class="language-zsh">ollama run qwen3:8b
+</code></pre>
+<p>出现 &gt;&gt;&gt; 就可以持续聊天</p>
+<p>• /bye 退出对话，释放模型内存</p>
+<p>• /help 查看终端内置指令</p>
+<ol start="3">
+<li>单次提问（不进入持续对话，用完立刻释放）</li>
+</ol>
+<pre><code class="language-zsh">ollama run qwen3:8b "大一医学生如何联系导师进课题组"
+</code></pre>
 <hr>
+<p>二、高频日常终端命令整理</p>
+<p>📦 模型管理
+查看本地所有已下载模型</p>
+<pre><code class="language-zsh">ollama list
+</code></pre>
+<p>下载模型</p>
+<pre><code class="language-zsh">ollama pull qwen3:8b
+</code></pre>
+<p>删除模型（释放硬盘）</p>
+<pre><code class="language-zsh">ollama rm qwen3:8b
+</code></pre>
+<p>查看模型参数信息</p>
+<pre><code class="language-zsh">ollama show qwen3:8b
+</code></pre>
+<p>⚙️ 运行监控
+查看当前正在加载运行的模型</p>
+<pre><code class="language-zsh">ollama ps
+</code></pre>
+<p>停止正在运行的模型，立刻回收内存</p>
+<pre><code class="language-zsh">ollama stop qwen3:8b
+</code></pre>
+<hr>
+<p>三、两种启动模式区别（重点区分，避免混乱）</p>
+<ol>
+<li>
+<p>brew services start ollama
+✅ 后台常驻服务，关闭终端服务依然运行，推荐日常使用</p>
+</li>
+<li>
+<p>ollama serve
+前台运行服务，关掉终端窗口服务直接终止，仅用于调试，不要日常用</p>
+</li>
+</ol>
+<p>四、适合你16G Mac：带内存优化临时启动</p>
+<p>如果你不想用brew常驻，前台启动带上优化参数：
+OLLAMA_FLASH_ATTENTION=“1” OLLAMA_KV_CACHE_TYPE=“q8_0” ollama serve
+五、实用小技巧</p>
+<ol>
+<li>不要长期挂着模型占用内存
+不用AI时执行：
+ollama stop qwen3:8b</li>
+<li>想直接把回答保存成文本
+ollama run qwen3:8b “总结噬菌体癌症治疗进展” &gt; answer.txt
+六、最简日常工作流（直接照抄使用）
+开机首次执行</li>
+</ol>
+<pre><code class="language-zsh">brew services start ollama
+</code></pre>
+<p>开启对话</p>
+<pre><code class="language-zsh">ollama run qwen3:8b
+</code></pre>
+<p>使用完毕退出对话</p>
+<blockquote>
+<p>/bye</p>
+</blockquote>
+<h1 id="长时间不用释放模型内存"><a class="header" href="#长时间不用释放模型内存">长时间不用，释放模型内存</a></h1>
+<pre><code class="language-zsh">ollama stop qwen3:8b
+</code></pre>
+<ol>
+<li>
+<p>所有模型文件默认存放路径（Mac Apple Silicon）
+~/.ollama/models</p>
+</li>
+<li>
+<p>如果局域网平板/手机访问本机AI，我可以给你局域网开放配置指令；</p>
+</li>
+<li>
+<p>OpenWebUI下载模型 ≡ ollama pull，图形界面操作不需要敲命令。</p>
+</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="终端和homebrew"><a href="#终端和homebrew" class="header">终端和homebrew</a></h1>
+<p><strong>简单查看：按option+space进入Raycast控制台，找到brew，选择show installed再回车。即可看见已安装的插件与软件!</strong></p>
+<p>终端中直接输入</p>
+<pre><code class="language-zsh">==mole==
+</code></pre>
+<p>再选择<strong>clean</strong>，<strong>可清理磁盘，卸载软件，优化系统。</strong></p>
+<p>终端输入</p>
+<pre><code class="language-zsh">==mole status==
+</code></pre>
+<p>获得电脑基本信息与一只小猫。</p>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
