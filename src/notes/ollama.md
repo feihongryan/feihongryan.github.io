@@ -36,7 +36,7 @@ ollama list
 
 下载模型
 ```zsh
-ollama pull qwen3:8bma
+ollama pull qwen3:8b
 ```
 删除模型（释放硬盘）
 ```zsh

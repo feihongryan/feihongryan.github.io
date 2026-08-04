@@ -4,4 +4,5 @@
 - [关于流程](chapter_2.md)
 
 - [笔记合集](notes/README.md)
-  - [ollama](notes/ollama.md)
+  - [Ollama](notes/ollama.md)
+  - [Markdown集合](NOTES/Markdown.md)
