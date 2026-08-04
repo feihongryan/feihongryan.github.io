@@ -25,6 +25,7 @@ ollama run qwen3:8b
 ```zsh
 ollama run qwen3:8b "大一医学生如何联系导师进课题组"
 ```
+---
 
 二、高频日常终端命令整理
 
@@ -55,6 +56,9 @@ ollama ps
 ```zsh
 ollama stop qwen3:8b
 ```
+
+---
+
 三、两种启动模式区别（重点区分，避免混乱）
 
 1. brew services start ollama
@@ -90,7 +94,6 @@ ollama run qwen3:8b
 ```zsh
 ollama stop qwen3:8b
 ```
-
 
 1. 所有模型文件默认存放路径（Mac Apple Silicon）
 ~/.ollama/models
