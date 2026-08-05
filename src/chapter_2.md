@@ -2,7 +2,7 @@
 
 首先进入vscode，在文稿中打开mdbook-site
 
-1.本地编译命令
+1.本地预览
 
 ```bash
 rm -rf book
