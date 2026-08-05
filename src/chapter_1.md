@@ -6,6 +6,6 @@
 
 ---
 
-![猫猫](images/猫猫.jpg)
+![小猫咪](images/IMG_0025.jpg)
 
 
