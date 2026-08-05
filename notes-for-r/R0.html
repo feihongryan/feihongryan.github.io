@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>终端和homebrew - 方飞鸿的主页</title>
+        <title>基本操作 - 方飞鸿的主页</title>
 
 
         <!-- Custom HTML head -->
@@ -173,25 +173,303 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <p><strong>简单查看：按option+space进入Raycast控制台，找到brew，选择show installed再回车。即可看见已安装的插件与软件!</strong></p>
-<p>终端中直接输入</p>
-<pre><code class="language-zsh">==mole==
+                        <p><strong>R for Rstudio</strong></p>
+<blockquote>
+<p>基础指令</p>
+</blockquote>
+<h2 id="1基本数据处理"><a class="header" href="#1基本数据处理">1.基本数据处理</a></h2>
+<p>1.加载数据</p>
+<pre><code class="language-R">library(datasets)  # Load/unload built in base packages manually
 </code></pre>
-<p>再选择<strong>clean</strong>，<strong>可清理磁盘，卸载软件，优化系统。</strong></p>
-<p>终端输入</p>
-<pre><code class="language-zsh">==mole status==
+<p>2.总结数据(以内置鸢尾数据为例)</p>
+<pre><code class="language-R">head(iris)         # Show the first six lines of iris data
+summary(iris)      # Summary statistics for iris data
+plot(iris)         # Scatterplot matrix for iris data
 </code></pre>
-<p>获得电脑基本信息与一只小猫。</p>
+<p>3.清理缓存</p>
+<pre><code class="language-R"># Clear packages
+detach("package:datasets", unload = TRUE)  # For base
+
+# Clear plots
+dev.off()  # But only if there IS a plot
+
+# Clear console
+cat("\014")  # ctrl+L
+
+# Clear mind :)
+</code></pre>
+<h2 id="2使用r包"><a class="header" href="#2使用r包">2.使用R包</a></h2>
+<h3 id="21几种常用包"><a class="header" href="#21几种常用包">2.1几种常用包</a></h3>
+<h4 id="1dplyr筛选新增列分组统计"><a class="header" href="#1dplyr筛选新增列分组统计">1.dplyr(筛选，新增列，分组统计)</a></h4>
+<blockquote>
+<p>dplyr 是 tidyverse 核心包，专门做数据框(data.frame/tibble)清洗、筛选、变换，管道符 %&gt;% 是标志性写法。</p>
+</blockquote>
+<pre><code class="language-R">函数	作用	
+select()	选择列（挑选变量）	
+filter()	筛选行（按条件筛选样本）	
+mutate()	新增/修改列	
+group_by() + summarise()	分组统计汇总	
+arrange()	排序	
+</code></pre>
+<h4 id="2tidyr表格长宽重塑缺失值处理拆并列"><a class="header" href="#2tidyr表格长宽重塑缺失值处理拆并列">2.tidyr(表格长宽重塑，缺失值处理，拆并列)</a></h4>
+<blockquote>
+<p>也属于tidyverse，专门做数据规整（长宽表转换、缺失值处理）。</p>
+</blockquote>
+<pre><code class="language-R">tidy data（整洁数据）规则：
+1.每一列 = 1个变量
+2.每一行 = 1条观测
+3.每个单元格 = 单个值
+
+函数	功能说明	最简示例	
+pivot_longer()	宽表 → 长表，把多列收拢为「变量‑数值」两列	df %&gt;% pivot_longer(cols=c(t0,t1,t2), names_to="time", values_to="val")	
+pivot_wider()	长表 → 宽表，把分类变量展开为多列	df %&gt;% pivot_wider(names_from=time, values_from=val)	
+drop_na()	删除包含NA的行	df %&gt;% drop_na()
+df %&gt;% drop_na(val)	
+replace_na()	替换NA为指定值	df %&gt;% replace_na(list(val = 0))	
+separate()	一列按分隔符拆分为多列	df %&gt;% separate(col, into=c("a","b"), sep="_")	
+unite()	多列合并为一列	df %&gt;% unite(newcol, c(a,b), sep="_")	
+fill()	向上/向下填充缺失值（时序补数据）	df %&gt;% fill(val, .direction = "down")	
+complete()	补全缺失组合，生成显式NA	df %&gt;% complete(id, time)	
+nest()	把多行数据嵌套进list列（分组嵌套数据框）	df %&gt;% nest(data = -group)	
+unnest()	把嵌套list列展开还原普通行	df %&gt;% unnest(data)	
+</code></pre>
+<h4 id="3stringr文本字符串处理"><a class="header" href="#3stringr文本字符串处理">3.stringr(文本字符串处理)</a></h4>
+<blockquote>
+<p>tidyverse 字符串处理包，library(tidyverse) 加载；函数全部以 str_ 开头，输入优先接收向量，非常适合配合 dplyr 处理表格文本。</p>
+</blockquote>
+<pre><code class="language-R">函数	功能说明	最简示例	
+str_detect()	检测是否匹配模式，返回 TRUE/FALSE（用于filter筛选）	str_detect(x, "abc")	
+str_subset()	直接返回匹配成功的文本	str_subset(x, "abc")	
+str_extract()	提取第一个匹配到的内容	str_extract(x, "\\d+")	
+str_extract_all()	提取全部匹配，返回列表	str_extract_all(x, "\\d+", simplify = TRUE)	
+str_replace()	替换第一个匹配内容	str_replace(x, "a", "A")	
+str_replace_all()	全部替换	str_replace_all(x, "a", "A")	
+str_remove()	删除第一个匹配，等价替换成空	str_remove(x, "\\s")	
+str_remove_all()	全部删除匹配字符	str_remove_all(x, "\\s")	
+str_split()	按分隔符拆分字符串，输出list	str_split(x, "_")	
+str_split_fixed()	拆分，输出固定列数矩阵	str_split_fixed(x, "_", n=2)	
+str_c()	字符串拼接（替代 paste）	str_c(a,"_",b)	
+str_glue()	格式化拼接字符串，支持大括号插值	str_glue("ID:{id}")	
+str_length()	获取字符数量	str_length(x)	
+str_trunc()	字符串截断	str_trunc(x, width=10)	
+str_trim()	去除首尾空白空格换行	str_trim(x)	
+str_squish()	去除首尾+中间多余空格，压缩空白	str_squish(x)	
+str_to_lower()	全部转小写	str_to_lower(x)	
+str_to_upper()	全部转大写	str_to_upper(x)	
+str_to_title()	每个单词首字母大写	str_to_title(x)	
+</code></pre>
+<h4 id="4lubridate解析日期"><a class="header" href="#4lubridate解析日期">4.lubridate(解析日期)</a></h4>
+<blockquote>
+<p>tidyverse时间日期包，专门处理日期‑时间，解决R原生日期繁琐解析；library(tidyverse)可加载，也可单独library(lubridate)
+<strong>核心：快速解析各式各样文本日期、提取年月日时分秒、时间运算、处理时区。</strong></p>
+</blockquote>
+<pre><code class="language-R">函数	功能说明	最简示例	
+解析日期（字符→日期）			
+ymd()	年‑月‑日，自动识别分隔符 - / .	ymd("2026‑08‑05")	
+myd()	月‑日‑年	myd("08‑05‑2026")	
+dmy()	日‑月‑年（欧洲格式）	dmy("05‑08‑2026")	
+ymd_hms()	解析 年‑月‑日 时:分:秒 完整时间	ymd_hms("2026‑08‑05 14:30:20")	
+提取时间组件			
+year()	提取年份	year(dt)	
+month()	提取月份数字；month(dt,label=TRUE)返回月份名称	month(dt)	
+day()	提取当月几号	day(dt)	
+wday()	星期几，1=周日；label=TRUE输出星期名称	wday(dt,label=TRUE)	
+hour()	小时	hour(dt)	
+minute()	分钟	minute(dt)	
+second()	秒数	second(dt)	
+时间运算			
+days(x)	天时间增量	dt + days(7)	
+months(x)	月份增量	dt + months(1)	
+years(x)	年份增量	dt - years(2)	
+weeks(x)	周	dt + weeks(2)	
+interval(start,end)	生成时间区间	interval(d1,d2)	
+%within%	判断时间是否落在区间内	dt %within% interval(d1,d2)	
+舍入对齐			
+floor_date()	向下取整（按月/按周对齐）	floor_date(dt, unit = "month")	
+ceiling_date()	向上取整	ceiling_date(dt, unit = "day")	
+round_date()	就近舍入	round_date(dt, unit="week")	
+时区			
+with_tz()	转换显示时区，时刻不变	with_tz(dt,tz="Asia/Shanghai")	
+force_tz()	强制修改时区，改变实际时刻	force_tz(dt,tz="Asia/Shanghai")	
+</code></pre>
+<h4 id="5httr爬取网页调用api接口传参"><a class="header" href="#5httr爬取网页调用api接口传参">5.httr（爬取网页、调用API、接口传参）</a></h4>
+<blockquote>
+<p>用于R发送HTTP请求,常搭配jsonlite解析返回JSON，也是科研抓取公开数据、调取接口的标配工具。</p>
+</blockquote>
+<pre><code class="language-R">函数	功能说明	最简示例	
+GET()	发送GET请求（查询数据、读取网页，最常用）	GET(url = "https://xxx.com/api")	
+POST()	发送POST请求（提交表单、上传数据、接口写入）	POST(url, body = list(name="test"))	
+PUT()	更新资源接口专用	PUT(url, body = list(data=123))	
+DELETE()	删除接口资源	DELETE(url)	
+add_headers()	自定义请求头（UA、Token、授权、Cookie）	add_headers(Authorization = "Bearer 你的令牌")	
+set_cookies()	携带Cookie发送请求	set_cookies(session="abc123")	
+content()	解析接口返回结果（文本/JSON/网页源码）	content(res, type = "text")	
+fromJSON()	将JSON文本转为R数据框（配合content使用）	fromJSON(content(res, "text"))	
+status_code()	查看HTTP状态码（200成功/404找不到/401权限不足）	status_code(res)	
+url_modify()	快速拼接GET请求参数	url_modify(base_url, query = list(page=1, size=10))	
+</code></pre>
+<h4 id="6ggvis交互式绘图包"><a class="header" href="#6ggvis交互式绘图包">6.ggvis(交互式绘图包)</a></h4>
+<blockquote>
+<p>语法借鉴ggplot2，可以生成网页交互式图表（鼠标悬浮显示数值、筛选、缩放），输出html小部件；现在已经停止维护，项目停滞，新项目优先用plotly替代。</p>
+</blockquote>
+<pre><code class="language-R">函数	功能说明	最简示例	
+ggvis(data, ~x, ~y)	初始化绘图对象，指定数据集、x/y映射	mtcars %&gt;% ggvis(~mpg, ~wt)	
+layer_points()	散点图层	layer_points()	
+layer_lines()	折线图层	layer_lines()	
+layer_bars()	柱状图	layer_bars()	
+layer_histograms()	直方图	layer_histograms()	
+layer_boxplots()	箱线图	layer_boxplots()	
+fill:=	固定填充颜色（:=常量赋值）	fill:="red"	
+fill=~var	映射变量做颜色分组	fill=~cyl	
+add_tooltip()	悬浮提示框，鼠标放上去显示信息	add_tooltip(function(df) df$model)	
+save_html()	保存为独立HTML文件，可以浏览器打开分享	p %&gt;% save_html("plot.html")	
+</code></pre>
+<h4 id="7ggplot2tidyverse核心绘图包"><a class="header" href="#7ggplot2tidyverse核心绘图包">7.ggplot2(tidyverse核心绘图包)</a></h4>
+<blockquote>
+<p>图层式绘图语法（Grammar of Graphics 图形语法）。逻辑：数据 + 映射(aes) + 几何图层 + 坐标轴/主题/标注。加载：library(ggplot2) 或者 library(tidyverse)</p>
+</blockquote>
+<pre><code class="language-R">#模版
+ggplot(数据框, aes(x = x列名, y = y列名, color = 分组变量, fill = 填充分组)) +
+  geom_xxx() +       # 几何图层（画什么图形）
+  labs() +           # 标题坐标轴名字
+  scale_xxx() +      # 坐标轴、颜色刻度
+  theme_xxx()        # 主题样式
+
+  函数	功能说明	最简示例	
+ggplot(df, aes())	初始化画布，设置映射aes	ggplot(iris, aes(x=Sepal.Length,y=Petal.Length))	
+几何图层 geom_			
+geom_point()	散点图	geom_point(size=2,alpha=0.7)	
+geom_line()	折线图（时间序列）	geom_line(linewidth=1)	
+geom_bar()	柱状图/条形图	geom_bar(stat="identity")	
+geom_col()	柱状图，直接使用y数值，不用stat	geom_col()	
+geom_histogram()	直方图，连续变量分布	geom_histogram(bins=20)	
+geom_boxplot()	箱线图，组间分布	geom_boxplot()	
+geom_violin()	小提琴图	geom_violin()	
+geom_density()	密度曲线	geom_density()	
+geom_smooth()	拟合曲线、回归拟合	geom_smooth(method="lm")	
+geom_text()	图上加文字标签	geom_text(aes(label=Species))	
+geom_hline() / geom_vline()	水平/垂直参考线	geom_hline(yintercept=5,lty=2)	
+标签与坐标轴 labs			
+labs()	标题、x轴、y轴、图例名	labs(title="图标题",x="X轴",y="Y轴",color="物种")	
+xlim() ylim()	设置坐标轴范围	xlim(4,8)	
+scale_x_continuous()	连续X轴精细设置	scale_x_continuous(breaks = seq(4,8,1))	
+scale_color_manual()	手动设置分组颜色	scale_color_manual(values=c("red","#3366cc"))	
+分面（子图）			
+facet_wrap(~group)	按变量分多张子图，自动换行	facet_wrap(~Species,ncol=2)	
+facet_grid(A~B)	二维交叉分面	facet_grid(Species ~ .)	
+主题 theme			
+theme_bw()	白底科研常用主题（论文首选）	theme_bw()	
+theme_minimal()	极简无背景	theme_minimal()	
+theme_classic()	经典黑白，只有xy轴框线	theme_classic()	
+theme()	精细调整字体、图例位置	theme(legend.position="bottom")	
+</code></pre>
+<h4 id="8shinyr语言交互式网页应用框架"><a class="header" href="#8shinyr语言交互式网页应用框架">8.Shiny(R语言交互式网页应用框架)</a></h4>
+<blockquote>
+<p>不需要懂HTML/CSS/JS，只用R代码就做网页APP；可本地运行、部署服务器/shinyapps.io。
+<strong>结构固定分为两大块：UI界面(前端) + Server逻辑(后端)</strong></p>
+</blockquote>
+<pre><code class="language-R">函数	功能说明	最简示例	
+UI布局与容器			
+fluidPage()	流体页面，基础页面容器	fluidPage(...)	
+titlePanel()	网页大标题	titlePanel("演示APP")	
+sidebarLayout()	侧边栏布局（最经典）	侧边栏+主面板	
+sidebarPanel()	侧边栏，放控件	sidebarPanel(...)	
+mainPanel()	主面板，放图、表格结果	mainPanel(...)	
+输入控件 input（用户交互）			
+sliderInput()	数值滑块	sliderInput("num","数字",min=1,max=100,value=50)	
+selectInput()	下拉选择框	selectInput("sp","物种",choices=unique(iris$Species))	
+radioButtons()	单选按钮	radioButtons("opt","选择",c("A","B"))	
+checkboxInput()	单个复选框	checkboxInput("show","显示线条")	
+textInput()	文本输入框	textInput("txt","输入文字")	
+actionButton()	执行按钮，点击触发计算	actionButton("go","运行")	
+输出 output（展示结果）			
+plotOutput("p1")	绘图输出位置	UI里放置绘图区域	
+tableOutput("tbl")	表格输出位置	展示数据框表格	
+textOutput("txtout")	文本输出位置	输出文字	
+Server渲染函数			
+renderPlot({})	渲染ggplot/base图	output$p1 &lt;- renderPlot({ ggplot(...) })	
+renderTable({})	渲染表格	output$tbl &lt;- renderTable({ df })	
+renderText({})	渲染文本	output$txtout &lt;- renderText({...})	
+reactive({})	响应式变量，封装计算，多次复用	data_react &lt;- reactive({ input$num })	
+isolate()	屏蔽响应，不随输入自动更新	isolate({ ... })	
+observeEvent()	监听按钮点击事件	observeEvent(input$go,{ ... })	
+运行&amp;部署			
+shinyApp(ui, server)	组装app，返回应用对象	app &lt;- shinyApp(ui,server)	
+runApp(app)	本地启动运行	runApp(app)	
+</code></pre>
+<h4 id="9rior一站式读写各种格式文件的包"><a class="header" href="#9rior一站式读写各种格式文件的包">9.Rio:(R一站式读写各种格式文件的包)</a></h4>
+<blockquote>
+<p>最大特点：统一函数 import() / export()，不用记各个包的readxxx/writexxx，自动识别文件后缀。
+<strong>底层内部调用 readr、data.table、haven、readxl 等，支持csv、xlsx、sav、dta、rds、json、excel等几十种格式。</strong></p>
+</blockquote>
+<pre><code class="language-R">函数	功能说明	最简示例	
+import()	导入数据，自动识别后缀	df &lt;- import("data.xlsx")	
+export()	导出保存数据框	export(df, "out.csv")	
+convert()	文件格式转换，不用进R环境	convert("input.sav","output.csv")	
+import_list()	读取Excel多个sheet，返回列表	lst &lt;- import_list("file.xlsx")	
+export_list()	把列表每个元素存为Excel不同sheet	export_list(lst, "multi_sheet.xlsx")	
+</code></pre>
+<h4 id="10r-markdown报告撰写工具"><a class="header" href="#10r-markdown报告撰写工具">10.R Markdown(报告撰写工具)</a></h4>
+<blockquote>
+<p>把 R代码、文字、公式、图片混写，一键渲染输出 PDF / Word / HTML，科研报告、课程报告、毕业论文、分析笔记主力工具。
+<strong>文件后缀：.Rmd；三部分：YAML头部、Markdown文本、R代码块。</strong></p>
+</blockquote>
+<pre><code class="language-R">功能/函数	说明	示例	
+YAML头	文档全局配置，放在文件最顶端	--- title:标题 output: html_document ---	
+```{r}	R代码块，运行R代码	```{r setup,include=FALSE}	
+include=FALSE	运行代码，但不显示代码、不显示输出	```{r setup,include=FALSE}	
+echo=FALSE	运行代码，隐藏代码，只展示图/结果	```{r fig.width=6,fig.height=4,echo=FALSE}	
+eval=FALSE	只显示代码，不执行代码	```{r eval=FALSE}	
+message=FALSE	屏蔽包加载message信息	message=FALSE	
+warning=FALSE	屏蔽警告warning	warning=FALSE	
+fig.width,fig.height	设置图片宽高英寸	fig.width=7,fig.height=5	
+fig.cap="图注"	设置图片图注	fig.cap="iris散点图"	
+render("xxx.Rmd")	代码渲染生成文档	render("report.Rmd",output_format="pdf_document")	
+</code></pre>
+<h3 id="22-pacman1个包加载所有的r包"><a class="header" href="#22-pacman1个包加载所有的r包">2.2 Pacman(1个包加载所有的R包)</a></h3>
+<blockquote>
+<p>全名为package manager，即包管理器。</p>
+</blockquote>
+<p><strong>LOAD PACKAGES 加载包</strong></p>
+<pre><code class="language-R"># I recommend "pacman" for managing add-on packages. 
+#It will install packages, if needed, and then load the packages.
+install.packages("pacman")
+# 任选其一 Then load the package by using either of the following:
+require(pacman)  # Gives a confirmation message.
+library(pacman)  # No message.
+</code></pre>
+<pre><code class="language-R">#选择要通过pacman加载的R包。
+# Or, by using "pacman::p_load" you can use the p_load
+# function from pacman without actually loading pacman.
+# These are packages I load every time.
+pacman::p_load(pacman, dplyr, GGally, ggplot2, ggthemes, 
+  ggvis, httr, lubridate, plotly, rio, rmarkdown, shiny, 
+  stringr, tidyr) 
+</code></pre>
+<p><strong>全部“插件包”加载完毕后加载数据，开展工作</strong></p>
+<pre><code class="language-R">library(datasets)  # Load/unload base packages manually
+</code></pre>
+<p><strong>CLEAN UP 清理包缓存。</strong></p>
+<pre><code class="language-R"># Clear packages
+p_unload(dplyr, tidyr, stringr) # Clear specific packages
+p_unload(all)  # Easier: clears all add-ons
+detach("package:datasets", unload = TRUE)  # For base
+
+# Clear console
+cat("\014")  # ctrl+L
+
+# Clear mind :)
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../notes/ollama.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../notes-for-r/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../notes-for-r/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../notes-for-r/R1.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -201,11 +479,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../notes/ollama.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../notes-for-r/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../notes-for-r/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../notes-for-r/R1.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
