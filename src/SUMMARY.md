@@ -5,5 +5,5 @@
 
 - [通用笔记合集](notes/README.md)
   - [Markdown集合](notes/Markdown.md)
-  - [Ollama](notes/ollama.md)
+  - [Ollama调用](notes/ollama.md)
   - [终端和homebrew](notes/terminal&brew.md)
