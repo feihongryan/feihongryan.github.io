@@ -34,10 +34,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-aaa1b7e0.js";
+            window.path_to_searchindex_js = "../searchindex-ddfd8093.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-76f3a6b2.js"></script>
+        <script src="../toc-9a7223f9.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -175,11 +175,11 @@
                     <main>
                         <p><strong>R for Rstudio</strong></p>
 <blockquote>
-<p>绘图指令(plot)，即Basic X-Y Plotting</p>
+<p>绘图指令(plot)，即Basic X-Y Plotting，画出柱形图，散点图，箱形图等。</p>
 </blockquote>
 <hr>
 <h2 id="1基本的可视化"><a class="header" href="#1基本的可视化">1.基本的可视化</a></h2>
-<h3 id="11画数据"><a class="header" href="#11画数据">1.1画数据</a></h3>
+<h3 id="画数据"><a class="header" href="#画数据">画数据</a></h3>
 <p><strong>仍旧以鸢尾数据为例说明各代码</strong></p>
 <pre><code class="language-R"># 加载数据集（包）###################################
 library(datasets)  # Load/unload base packages manually
@@ -205,7 +205,7 @@ plot(iris$Petal.Length, iris$Petal.Width,
   xlab = "Petal Length", #设置x轴名称
   ylab = "Petal Width") #设置y轴名称
 </code></pre>
-<h3 id="12画函数"><a class="header" href="#12画函数">1.2画函数</a></h3>
+<h3 id="画函数"><a class="header" href="#画函数">画函数</a></h3>
 <pre><code class="language-R"># PLOT FORMULAS WITH PLOT() 用plot命令画函数################
 plot(cos, 0, 2*pi) #余弦（0～2pi）
 plot(exp, 1, 5)#e的指数（1～5次）
@@ -233,6 +233,112 @@ cat("\014")  # ctrl+L
 
 # Clear mind :)
 </code></pre>
+<h2 id="2变量间的可视化-散点图"><a class="header" href="#2变量间的可视化-散点图">2.变量间的可视化-散点图</a></h2>
+<p><strong>散点图（Scatterplots）</strong></p>
+<blockquote>
+<p>作用：1.寻找两变量相关性（线性等）；2.发展、延伸趋势（扇形等）；3.异常值</p>
+</blockquote>
+<hr>
+<p>准备</p>
+<pre><code class="language-R"># LOAD DATASETS PACKAGES 
+library(datasets)  # Load/unload base packages manually
+
+# LOAD DATA (1974年汽车道路测试数据)
+?mtcars
+head(mtcars) #列出所有数据
+</code></pre>
+<p>画图</p>
+<pre><code class="language-R"># PLOTS 
+# Good to first check univariate distributions
+#画图前，先看目标对象/变量的频数分布直方图以概览。
+hist(mtcars$wt) #hist(数据集$变量)
+hist(mtcars$mpg)
+</code></pre>
+<pre><code class="language-R"># Basic X-Y plot for two quantitative variables
+plot(mtcars$wt, mtcars$mpg) #R自动识别两个变量，并选择以最合适的散点图输出。
+
+# Add some options 设置外观细节。
+plot(mtcars$wt, mtcars$mpg,
+  pch = 19,         # Solid circle
+  cex = 1.5,        # Make 150% size
+  col = "#cc0000",  # Red
+  main = "MPG as a Function of Weight of Cars",
+  xlab = "Weight (in 1000 pounds)",
+  ylab = "MPG")
+</code></pre>
+<p><strong>清理</strong></p>
+<pre><code class="language-R"># CLEAN UP #################################################
+
+# Clear packages
+detach("package:datasets", unload = TRUE)
+
+# Clear plots
+dev.off()  # But only if there IS a plot
+
+# Clear console
+cat("\014")  # ctrl+L
+
+# Clear mind :)
+</code></pre>
+<h2 id="3图像的立体化-叠加图"><a class="header" href="#3图像的立体化-叠加图">3.图像的立体化-叠加图</a></h2>
+<p><strong>叠加图（OverlayingPlots）</strong></p>
+<blockquote>
+<p>多角度，多层次且直观的数据解析-像毕加索的画。</p>
+</blockquote>
+<p>准备</p>
+<pre><code class="language-R"># INSTALL AND LOAD PACKAGES ################################
+library(datasets)  # Load/unload base packages manually
+# LOAD DATA ################################################
+# Annual Canadian Lynx trappings 1821-1934(加拿大猞猁数据集)
+?lynx
+head(lynx)
+</code></pre>
+<p>画图</p>
+<pre><code class="language-R"># HISTOGRAM ################################################
+
+# Default #默认的频数分布直方图
+hist(lynx)
+</code></pre>
+<p>设置图像细节</p>
+<pre><code class="language-R"># Add some options
+hist(lynx,
+     breaks = 14,          # "Suggests" 14 bins 建议分14组
+     freq   = FALSE,       # Axis shows density, not freq.（设置成密度而非频率，即让输出是总分布的比例）
+     col    = "thistle1",  # Color for histogram 淡紫色/粉红色
+     main   = paste("Histogram of Annual Canadian Lynx",
+                    "Trappings, 1821-1934"),
+     xlab   = "Number of Lynx Trapped")
+</code></pre>
+<p><strong>curve()</strong>:添加正态分布曲线</p>
+<pre><code class="language-R"># Add a normal distribution 用curve命令增加一个正态分布，在原图基础上对比差异。
+curve(dnorm(x, mean = mean(lynx), sd = sd(lynx)), #使用链接数据的平均值和方差
+      col = "thistle4",  # Color of curve 颜色略有不同
+      lwd = 2,           # Line width of 2 pixels 线条设置为两个像素宽
+      add = TRUE)        # Superimpose on previous graph 用add来画在上一个图上
+</code></pre>
+<p><strong>lines()</strong>:添加核密度估计器（跟随数据分布走向的类钟形曲线）</p>
+<pre><code class="language-R"># Add two kernel density estimators 
+lines(density(lynx), col = "blue", lwd = 2) #（标准核密度估计器，颜色，线宽）
+lines(density(lynx, adjust = 3), col = "purple", lwd = 2)#（调横越的平均值/移动平均线（增加3个单位））
+</code></pre>
+<p><strong>rug()</strong>:在每个单独数据点下加一条垂直线</p>
+<pre><code class="language-R"># Add a rug plot
+rug(lynx, lwd = 2, col = "gray")
+</code></pre>
+<p>如常清理</p>
+<pre><code class="language-R"># CLEAN UP #################################################
+
+# Clear packages
+detach("package:datasets", unload = TRUE)  # For base
+
+# Clear plots
+dev.off()  # But only if there IS a plot
+
+# Clear console
+cat("\014")  # ctrl+L
+
+# Clear mind :)
+</code></pre>
 
                     </main>
 
@@ -242,6 +348,9 @@ cat("\014")  # ctrl+L
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
+                            <a rel="next prefetch" href="../notes-for-r/R2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -253,6 +362,9 @@ cat("\014")  # ctrl+L
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
+                    <a rel="next prefetch" href="../notes-for-r/R2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
             </nav>
 
         </div>
