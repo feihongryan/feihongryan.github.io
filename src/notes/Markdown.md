@@ -63,6 +63,7 @@ markdown
 ```markdown
 [链接文本](https://example.com)
 ![替代文本](https://example.com/image.jpg)
+![示例](../example.jpg) #../表示回到上一级目录
 ```
 [链接文本](https://example.com)
 ![替代文本](https://example.com/image.jpg)
