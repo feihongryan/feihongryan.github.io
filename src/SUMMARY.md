@@ -10,3 +10,4 @@
 - [R语言笔记](notes-for-r/README.md)
   - [基本操作](notes-for-r/R0.md)
   - [plot()](notes-for-r/R1.md)
+  - [hist()](notes-for-r/R2.md)
