@@ -1,8 +1,11 @@
+**R语言在科研场景中的实际应用**
+
 **R for Rstudio**
+## 1.Plot()
 > 绘图指令(plot)，即Basic X-Y Plotting，画出柱形图，散点图，箱形图等。
 ---
-## 1.基本的可视化
-### 画数据
+### 1.基本的可视化
+#### 画数据
 **仍旧以鸢尾数据为例说明各代码**
 ```R
 # 加载数据集（包）###################################
@@ -32,7 +35,7 @@ plot(iris$Petal.Length, iris$Petal.Width,
   xlab = "Petal Length", #设置x轴名称
   ylab = "Petal Width") #设置y轴名称
 ```
-### 画函数
+#### 画函数
 ```R
 # PLOT FORMULAS WITH PLOT() 用plot命令画函数################
 plot(cos, 0, 2*pi) #余弦（0～2pi）
@@ -63,7 +66,7 @@ cat("\014")  # ctrl+L
 
 # Clear mind :)
 ```
-## 2.变量间的可视化-散点图
+### 2.变量间的可视化-散点图
 **散点图（Scatterplots）**
 >作用：1.寻找两变量相关性（线性等）；2.发展、延伸趋势（扇形等）；3.异常值
 ---
@@ -112,7 +115,7 @@ cat("\014")  # ctrl+L
 
 # Clear mind :)
 ```
-## 3.图像的立体化-叠加图
+### 3.图像的立体化-叠加图
 **叠加图（OverlayingPlots）**
 >多角度，多层次且直观的数据解析-像毕加索的画。
 
@@ -161,6 +164,89 @@ lines(density(lynx, adjust = 3), col = "purple", lwd = 2)#（调横越的平均�
 ```R
 # Add a rug plot
 rug(lynx, lwd = 2, col = "gray")
+```
+如常清理
+```R
+# CLEAN UP #################################################
+
+# Clear packages
+detach("package:datasets", unload = TRUE)  # For base
+
+# Clear plots
+dev.off()  # But only if there IS a plot
+
+# Clear console
+cat("\014")  # ctrl+L
+
+# Clear mind :)
+```
+## 2.hist()
+>Histograms,频数分布直方图。帮助寻找：1.分布的形状（单峰、双峰、倾斜）；2.缺口；3.异常值；4.对称性。
+---
+### 基本的频数分布直方图
+```R
+# BASIC HISTOGRAMS 
+hist(iris$Sepal.Length)     #hist(数据集$对象.变量)，即定向变量。
+hist(iris$Sepal.Width)
+hist(iris$Petal.Length)
+hist(iris$Petal.Width)
+```
+---
+### 分组的频数分布直方图
+```R
+# HISTOGRAM BY GROUP
+# Put graphs in 3 rows and 1 column 三行一列
+par(mfrow = c(3, 1)) #先为目标输出格式分组
+
+# Histograms for each species using options
+hist(iris$Petal.Width [iris$Species == "setosa"],  #变量和行选择
+  xlim = c(0, 3), #对x轴的limit，手动确保三个平行的直方图有相同的x轴刻度
+  breaks = 9, #建议步长
+  main = "Petal Width for Setosa", #标题
+  xlab = "", #设置成无x标签（更简洁）
+  col = "red") #柱形为红色
+
+hist(iris$Petal.Width [iris$Species == "versicolor"],
+  xlim = c(0, 3),
+  breaks = 9,
+  main = "Petal Width for Versicolor",
+  xlab = "",
+  col = "purple")
+
+hist(iris$Petal.Width [iris$Species == "virginica"],
+  xlim = c(0, 3),
+  breaks = 9,
+  main = "Petal Width for Virginica",
+  xlab = "",
+  col = "blue")
+```
+**以下为示例**
+![示例](../images/r-hist.png)
+**最后别忘了恢复到默认输出模式！！！**
+```R
+# Restore graphic parameter 回到标准输出模式。
+par(mfrow=c(1, 1))
+```
+## 3.summary()
+>Basic Summary Function in R.
+1.The idea here is something could be done after the Pictures.
+2.Get some precision(精度)
+---
+代码仍以鸢尾为例：
+
+准备
+```R
+# INSTALL AND LOAD PACKAGES ################################
+library(datasets)  # Load/unload base packages manually
+# LOAD DATA ################################################
+head(iris)
+```
+三种Summary：
+```R
+# SUMMARY()
+summary(iris$Species)       # Categorical variable 每一类别计数
+summary(iris$Sepal.Length)  # Quantitative variable 获得精确的分数分布（上下四分位数，中位数，平均数等）
+summary(iris)               # Entire data frame 综合前二者对整个数据表的最详细总结
 ```
 如常清理
 ```R
