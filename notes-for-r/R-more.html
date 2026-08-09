@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>hist() - 方飞鸿的主页</title>
+        <title>数据处理与画图 - 方飞鸿的主页</title>
 
 
         <!-- Custom HTML head -->
@@ -34,10 +34,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-72757e3d.js";
+            window.path_to_searchindex_js = "../searchindex-ec9f0454.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-9a7223f9.js"></script>
+        <script src="../toc-912e4946.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -173,7 +173,175 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <p><strong>R for Rstudio</strong></p>
+                        <p><strong>R语言在科研场景中的实际应用</strong></p>
+<p><strong>R for Rstudio</strong></p>
+<h2 id="1plot"><a class="header" href="#1plot">1.Plot()</a></h2>
+<blockquote>
+<p>绘图指令(plot)，即Basic X-Y Plotting，画出柱形图，散点图，箱形图等。</p>
+</blockquote>
+<hr>
+<h3 id="1基本的可视化"><a class="header" href="#1基本的可视化">1.基本的可视化</a></h3>
+<h4 id="画数据"><a class="header" href="#画数据">画数据</a></h4>
+<p><strong>仍旧以鸢尾数据为例说明各代码</strong></p>
+<pre><code class="language-R"># 加载数据集（包）###################################
+library(datasets)  # Load/unload base packages manually
+</code></pre>
+<pre><code class="language-R"># LOAD DATA ################################################
+head(iris)
+</code></pre>
+<pre><code class="language-R"># PLOT DATA WITH PLOT() 用plot命令画出数据
+
+?plot  # Help for plot()在studio中得到所有plot命令
+
+plot(iris$Species)  # Categorical variable 分类变量
+plot(iris$Petal.Length)  # Quantitative variable 定量变量
+plot(iris$Species, iris$Petal.Width)  # Cat x quant x轴上的分类量化（按species分，出箱形图）
+plot(iris$Petal.Length, iris$Petal.Width)  # Quant pair 变量对量化（横纵坐标都有数据，出散点图）
+plot(iris)  # Entire data frame 整个数据集的变量对比表
+</code></pre>
+<pre><code class="language-R"># Plot with options 图形可调参数
+plot(iris$Petal.Length, iris$Petal.Width,
+  col = "#cc0000",  # Hex code for datalab.cc red 调颜色
+  pch = 19,         # Use solid circles for points 把空心点变成实心
+  main = "Iris: Petal Length vs. Petal Width", #设置标题
+  xlab = "Petal Length", #设置x轴名称
+  ylab = "Petal Width") #设置y轴名称
+</code></pre>
+<h4 id="画函数"><a class="header" href="#画函数">画函数</a></h4>
+<pre><code class="language-R"># PLOT FORMULAS WITH PLOT() 用plot命令画函数################
+plot(cos, 0, 2*pi) #余弦（0～2pi）
+plot(exp, 1, 5)#e的指数（1～5次）
+plot(dnorm, -3, +3)#正态分布（-3～3）
+</code></pre>
+<pre><code class="language-R"># Formula plot with options
+plot(dnorm, -3, +3,
+  col = "#cc0000",
+  lwd = 5,
+  main = "Standard Normal Distribution",
+  xlab = "z-scores",
+  ylab = "Density")
+</code></pre>
+<p><strong>清理</strong></p>
+<pre><code class="language-R"># CLEAN UP #################################################
+
+# Clear packages
+detach("package:datasets", unload = TRUE)
+
+# Clear plots
+dev.off()  # But only if there IS a plot
+
+# Clear console
+cat("\014")  # ctrl+L
+
+# Clear mind :)
+</code></pre>
+<h3 id="2变量间的可视化-散点图"><a class="header" href="#2变量间的可视化-散点图">2.变量间的可视化-散点图</a></h3>
+<p><strong>散点图（Scatterplots）</strong></p>
+<blockquote>
+<p>作用：1.寻找两变量相关性（线性等）；2.发展、延伸趋势（扇形等）；3.异常值</p>
+</blockquote>
+<hr>
+<p>准备</p>
+<pre><code class="language-R"># LOAD DATASETS PACKAGES 
+library(datasets)  # Load/unload base packages manually
+
+# LOAD DATA (1974年汽车道路测试数据)
+?mtcars
+head(mtcars) #列出所有数据
+</code></pre>
+<p>画图</p>
+<pre><code class="language-R"># PLOTS 
+# Good to first check univariate distributions
+#画图前，先看目标对象/变量的频数分布直方图以概览。
+hist(mtcars$wt) #hist(数据集$变量)
+hist(mtcars$mpg)
+</code></pre>
+<pre><code class="language-R"># Basic X-Y plot for two quantitative variables
+plot(mtcars$wt, mtcars$mpg) #R自动识别两个变量，并选择以最合适的散点图输出。
+
+# Add some options 设置外观细节。
+plot(mtcars$wt, mtcars$mpg,
+  pch = 19,         # Solid circle
+  cex = 1.5,        # Make 150% size
+  col = "#cc0000",  # Red
+  main = "MPG as a Function of Weight of Cars",
+  xlab = "Weight (in 1000 pounds)",
+  ylab = "MPG")
+</code></pre>
+<p><strong>清理</strong></p>
+<pre><code class="language-R"># CLEAN UP #################################################
+
+# Clear packages
+detach("package:datasets", unload = TRUE)
+
+# Clear plots
+dev.off()  # But only if there IS a plot
+
+# Clear console
+cat("\014")  # ctrl+L
+
+# Clear mind :)
+</code></pre>
+<h3 id="3图像的立体化-叠加图"><a class="header" href="#3图像的立体化-叠加图">3.图像的立体化-叠加图</a></h3>
+<p><strong>叠加图（OverlayingPlots）</strong></p>
+<blockquote>
+<p>多角度，多层次且直观的数据解析-像毕加索的画。</p>
+</blockquote>
+<p>准备</p>
+<pre><code class="language-R"># INSTALL AND LOAD PACKAGES ################################
+library(datasets)  # Load/unload base packages manually
+# LOAD DATA ################################################
+# Annual Canadian Lynx trappings 1821-1934(加拿大猞猁数据集)
+?lynx
+head(lynx)
+</code></pre>
+<p>画图</p>
+<pre><code class="language-R"># HISTOGRAM ################################################
+
+# Default #默认的频数分布直方图
+hist(lynx)
+</code></pre>
+<p>设置图像细节</p>
+<pre><code class="language-R"># Add some options
+hist(lynx,
+     breaks = 14,          # "Suggests" 14 bins 建议分14组
+     freq   = FALSE,       # Axis shows density, not freq.（设置成密度而非频率，即让输出是总分布的比例）
+     col    = "thistle1",  # Color for histogram 淡紫色/粉红色
+     main   = paste("Histogram of Annual Canadian Lynx",
+                    "Trappings, 1821-1934"),
+     xlab   = "Number of Lynx Trapped")
+</code></pre>
+<p><strong>curve()</strong>:添加正态分布曲线</p>
+<pre><code class="language-R"># Add a normal distribution 用curve命令增加一个正态分布，在原图基础上对比差异。
+curve(dnorm(x, mean = mean(lynx), sd = sd(lynx)), #使用链接数据的平均值和方差
+      col = "thistle4",  # Color of curve 颜色略有不同
+      lwd = 2,           # Line width of 2 pixels 线条设置为两个像素宽
+      add = TRUE)        # Superimpose on previous graph 用add来画在上一个图上
+</code></pre>
+<p><strong>lines()</strong>:添加核密度估计器（跟随数据分布走向的类钟形曲线）</p>
+<pre><code class="language-R"># Add two kernel density estimators 
+lines(density(lynx), col = "blue", lwd = 2) #（标准核密度估计器，颜色，线宽）
+lines(density(lynx, adjust = 3), col = "purple", lwd = 2)#（调横越的平均值/移动平均线（增加3个单位））
+</code></pre>
+<p><strong>rug()</strong>:在每个单独数据点下加一条垂直线</p>
+<pre><code class="language-R"># Add a rug plot
+rug(lynx, lwd = 2, col = "gray")
+</code></pre>
+<p>如常清理</p>
+<pre><code class="language-R"># CLEAN UP #################################################
+
+# Clear packages
+detach("package:datasets", unload = TRUE)  # For base
+
+# Clear plots
+dev.off()  # But only if there IS a plot
+
+# Clear console
+cat("\014")  # ctrl+L
+
+# Clear mind :)
+</code></pre>
+<h2 id="2hist"><a class="header" href="#2hist">2.hist()</a></h2>
 <blockquote>
 <p>Histograms,频数分布直方图。帮助寻找：1.分布的形状（单峰、双峰、倾斜）；2.缺口；3.异常值；4.对称性。</p>
 </blockquote>
@@ -219,12 +387,46 @@ hist(iris$Petal.Width [iris$Species == "virginica"],
 <pre><code class="language-R"># Restore graphic parameter 回到标准输出模式。
 par(mfrow=c(1, 1))
 </code></pre>
+<h2 id="3summary"><a class="header" href="#3summary">3.summary()</a></h2>
+<blockquote>
+<p>Basic Summary Function in R.
+1.The idea here is something could be done after the Pictures.
+2.Get some precision(精度)</p>
+</blockquote>
+<hr>
+<p>代码仍以鸢尾为例：</p>
+<p>准备</p>
+<pre><code class="language-R"># INSTALL AND LOAD PACKAGES ################################
+library(datasets)  # Load/unload base packages manually
+# LOAD DATA ################################################
+head(iris)
+</code></pre>
+<p>三种Summary：</p>
+<pre><code class="language-R"># SUMMARY()
+summary(iris$Species)       # Categorical variable 每一类别计数
+summary(iris$Sepal.Length)  # Quantitative variable 获得精确的分数分布（上下四分位数，中位数，平均数等）
+summary(iris)               # Entire data frame 综合前二者对整个数据表的最详细总结
+</code></pre>
+<p>如常清理</p>
+<pre><code class="language-R"># CLEAN UP #################################################
+
+# Clear packages
+detach("package:datasets", unload = TRUE)  # For base
+
+# Clear plots
+dev.off()  # But only if there IS a plot
+
+# Clear console
+cat("\014")  # ctrl+L
+
+# Clear mind :)
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../notes-for-r/R1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../notes-for-r/R0.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
@@ -235,7 +437,7 @@ par(mfrow=c(1, 1))
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../notes-for-r/R1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../notes-for-r/R0.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 

@@ -35,10 +35,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-72757e3d.js";
+            window.path_to_searchindex_js = "searchindex-ec9f0454.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-9a7223f9.js"></script>
+        <script src="toc-912e4946.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -1031,14 +1031,16 @@ cat("\014")  # ctrl+L
 # Clear mind :)
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="plot"><a href="#plot" class="header">plot()</a></h1>
+<h1 id="数据处理与画图"><a href="#数据处理与画图" class="header">数据处理与画图</a></h1>
+<p><strong>R语言在科研场景中的实际应用</strong></p>
 <p><strong>R for Rstudio</strong></p>
+<h2 id="1plot"><a class="header" href="#1plot">1.Plot()</a></h2>
 <blockquote>
 <p>绘图指令(plot)，即Basic X-Y Plotting，画出柱形图，散点图，箱形图等。</p>
 </blockquote>
 <hr>
-<h2 id="1基本的可视化"><a class="header" href="#1基本的可视化">1.基本的可视化</a></h2>
-<h3 id="画数据"><a class="header" href="#画数据">画数据</a></h3>
+<h3 id="1基本的可视化"><a class="header" href="#1基本的可视化">1.基本的可视化</a></h3>
+<h4 id="画数据"><a class="header" href="#画数据">画数据</a></h4>
 <p><strong>仍旧以鸢尾数据为例说明各代码</strong></p>
 <pre><code class="language-R"># 加载数据集（包）###################################
 library(datasets)  # Load/unload base packages manually
@@ -1064,7 +1066,7 @@ plot(iris$Petal.Length, iris$Petal.Width,
   xlab = "Petal Length", #设置x轴名称
   ylab = "Petal Width") #设置y轴名称
 </code></pre>
-<h3 id="画函数"><a class="header" href="#画函数">画函数</a></h3>
+<h4 id="画函数"><a class="header" href="#画函数">画函数</a></h4>
 <pre><code class="language-R"># PLOT FORMULAS WITH PLOT() 用plot命令画函数################
 plot(cos, 0, 2*pi) #余弦（0～2pi）
 plot(exp, 1, 5)#e的指数（1～5次）
@@ -1092,7 +1094,7 @@ cat("\014")  # ctrl+L
 
 # Clear mind :)
 </code></pre>
-<h2 id="2变量间的可视化-散点图"><a class="header" href="#2变量间的可视化-散点图">2.变量间的可视化-散点图</a></h2>
+<h3 id="2变量间的可视化-散点图"><a class="header" href="#2变量间的可视化-散点图">2.变量间的可视化-散点图</a></h3>
 <p><strong>散点图（Scatterplots）</strong></p>
 <blockquote>
 <p>作用：1.寻找两变量相关性（线性等）；2.发展、延伸趋势（扇形等）；3.异常值</p>
@@ -1139,7 +1141,7 @@ cat("\014")  # ctrl+L
 
 # Clear mind :)
 </code></pre>
-<h2 id="3图像的立体化-叠加图"><a class="header" href="#3图像的立体化-叠加图">3.图像的立体化-叠加图</a></h2>
+<h3 id="3图像的立体化-叠加图"><a class="header" href="#3图像的立体化-叠加图">3.图像的立体化-叠加图</a></h3>
 <p><strong>叠加图（OverlayingPlots）</strong></p>
 <blockquote>
 <p>多角度，多层次且直观的数据解析-像毕加索的画。</p>
@@ -1198,9 +1200,7 @@ cat("\014")  # ctrl+L
 
 # Clear mind :)
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div>
-<h1 id="hist"><a href="#hist" class="header">hist()</a></h1>
-<p><strong>R for Rstudio</strong></p>
+<h2 id="2hist"><a class="header" href="#2hist">2.hist()</a></h2>
 <blockquote>
 <p>Histograms,频数分布直方图。帮助寻找：1.分布的形状（单峰、双峰、倾斜）；2.缺口；3.异常值；4.对称性。</p>
 </blockquote>
@@ -1245,6 +1245,40 @@ hist(iris$Petal.Width [iris$Species == "virginica"],
 <strong>最后别忘了恢复到默认输出模式！！！</strong></p>
 <pre><code class="language-R"># Restore graphic parameter 回到标准输出模式。
 par(mfrow=c(1, 1))
+</code></pre>
+<h2 id="3summary"><a class="header" href="#3summary">3.summary()</a></h2>
+<blockquote>
+<p>Basic Summary Function in R.
+1.The idea here is something could be done after the Pictures.
+2.Get some precision(精度)</p>
+</blockquote>
+<hr>
+<p>代码仍以鸢尾为例：</p>
+<p>准备</p>
+<pre><code class="language-R"># INSTALL AND LOAD PACKAGES ################################
+library(datasets)  # Load/unload base packages manually
+# LOAD DATA ################################################
+head(iris)
+</code></pre>
+<p>三种Summary：</p>
+<pre><code class="language-R"># SUMMARY()
+summary(iris$Species)       # Categorical variable 每一类别计数
+summary(iris$Sepal.Length)  # Quantitative variable 获得精确的分数分布（上下四分位数，中位数，平均数等）
+summary(iris)               # Entire data frame 综合前二者对整个数据表的最详细总结
+</code></pre>
+<p>如常清理</p>
+<pre><code class="language-R"># CLEAN UP #################################################
+
+# Clear packages
+detach("package:datasets", unload = TRUE)  # For base
+
+# Clear plots
+dev.off()  # But only if there IS a plot
+
+# Clear console
+cat("\014")  # ctrl+L
+
+# Clear mind :)
 </code></pre>
 
                     </main>
