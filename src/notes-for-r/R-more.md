@@ -1,5 +1,4 @@
-**R语言在科研场景中的实际应用**
-
+# R语言在科研场景中的实际应用
 **R for Rstudio**
 ## 1.Plot()
 > 绘图指令(plot)，即Basic X-Y Plotting，画出柱形图，散点图，箱形图等。
