@@ -262,3 +262,56 @@ cat("\014")  # ctrl+L
 
 # Clear mind :)
 ```
+
+## 4.Describe()
+> For more details-From psych package-来自心理学研究开发的R包。
+
+**可获得的细节：n-样本量；mean-平均值；SD-Standard Deviation-标准差；median-中位数；10% trimmed mean-10%截尾均值；MAD-绝对偏差中位数；min/max；range；skewness-偏度；kurtosis-峰度；SE-标准误差**
+> 在已经生成图片的基础上再想获得详细的数据。
+
+第一步：由pacman载入
+```R
+# Use pacman to load add-on packages as desired
+pacman::p_load(pacman, psych) 
+```
+控制台输出如下即完成
+```
+> # Use pacman to load add-on packages as desired
+> pacman::p_load(pacman, psych) 
+also installing the dependencies ‘mnormt’, ‘GPArotation’
+trying URL 'https://cran.rstudio.com/bin/macosx/sonoma-arm64/contrib/4.6/mnormt_2.1.2.tgz'
+trying URL 'https://cran.rstudio.com/bin/macosx/sonoma-arm64/contrib/4.6/GPArotation_2026.8-2.tgz'
+trying URL 'https://cran.rstudio.com/bin/macosx/sonoma-arm64/contrib/4.6/psych_2.6.5.tgz'
+
+The downloaded binary packages are in
+	/var/folders/j6/2yxzb2wn2yz9dwy69fkqtg8h0000gn/T//RtmpVzzrfr/downloaded_packages
+
+psych installed
+```
+**开始Describe()**
+```R
+# For quantitative variables only.
+describe(iris$Sepal.Length)  # One quantitative variable-一个定量变量
+describe(iris)               # Entire data frame-整个数据集
+```
+得到如下结果:
+|vars| n | mean | sd | median | trimmed | mad | min | max | range | skew | kurtosis | se |
+|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+|1| 150 | 5.84 | 0.83 | 5.8 | 5.81 | 1.04 | 4.3 | 7.9 | 3.6 | 0.31 | -0.61 | 0.07 |
+
+clean
+```R
+# CLEAN UP #################################################
+
+# Clear environment
+rm(list = ls()) 
+
+# Clear packages
+p_unload(all)  # Remove all add-ons
+detach("package:datasets", unload = TRUE)   # For base
+
+# Clear console
+cat("\014")  # ctrl+L
+
+# Clear mind :)
+```
