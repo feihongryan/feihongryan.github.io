@@ -34,7 +34,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-70001128.js";
+            window.path_to_searchindex_js = "../searchindex-ab1df0fc.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-912e4946.js"></script>
@@ -415,6 +415,62 @@ detach("package:datasets", unload = TRUE)  # For base
 
 # Clear plots
 dev.off()  # But only if there IS a plot
+
+# Clear console
+cat("\014")  # ctrl+L
+
+# Clear mind :)
+</code></pre>
+<h2 id="4describe"><a class="header" href="#4describe">4.Describe()</a></h2>
+<blockquote>
+<p>For more details-From psych package-来自心理学研究开发的R包。</p>
+</blockquote>
+<p><strong>可获得的细节：n-样本量；mean-平均值；SD-Standard Deviation-标准差；median-中位数；10% trimmed mean-10%截尾均值；MAD-绝对偏差中位数；min/max；range；skewness-偏度；kurtosis-峰度；SE-标准误差</strong></p>
+<blockquote>
+<p>在已经生成图片的基础上再想获得详细的数据。</p>
+</blockquote>
+<p>第一步：由pacman载入</p>
+<pre><code class="language-R"># Use pacman to load add-on packages as desired
+pacman::p_load(pacman, psych) 
+</code></pre>
+<p>控制台输出如下即完成</p>
+<pre><code>&gt; # Use pacman to load add-on packages as desired
+&gt; pacman::p_load(pacman, psych) 
+also installing the dependencies ‘mnormt’, ‘GPArotation’
+trying URL 'https://cran.rstudio.com/bin/macosx/sonoma-arm64/contrib/4.6/mnormt_2.1.2.tgz'
+trying URL 'https://cran.rstudio.com/bin/macosx/sonoma-arm64/contrib/4.6/GPArotation_2026.8-2.tgz'
+trying URL 'https://cran.rstudio.com/bin/macosx/sonoma-arm64/contrib/4.6/psych_2.6.5.tgz'
+
+The downloaded binary packages are in
+	/var/folders/j6/2yxzb2wn2yz9dwy69fkqtg8h0000gn/T//RtmpVzzrfr/downloaded_packages
+
+psych installed
+</code></pre>
+<p><strong>开始Describe()</strong></p>
+<pre><code class="language-R"># For quantitative variables only.
+describe(iris$Sepal.Length)  # One quantitative variable-一个定量变量
+describe(iris)               # Entire data frame-整个数据集
+</code></pre>
+<p>得到如下结果:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>vars</th><th>n</th><th>mean</th><th>sd</th><th>median</th><th>trimmed</th><th>mad</th><th>min</th><th>max</th><th>range</th><th>skew</th><th>kurtosis</th><th>se</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>150</td><td>5.84</td><td>0.83</td><td>5.8</td><td>5.81</td><td>1.04</td><td>4.3</td><td>7.9</td><td>3.6</td><td>0.31</td><td>-0.61</td><td>0.07</td></tr>
+</tbody>
+</table>
+</div>
+<p>clean</p>
+<pre><code class="language-R"># CLEAN UP #################################################
+
+# Clear environment
+rm(list = ls()) 
+
+# Clear packages
+p_unload(all)  # Remove all add-ons
+detach("package:datasets", unload = TRUE)   # For base
 
 # Clear console
 cat("\014")  # ctrl+L
