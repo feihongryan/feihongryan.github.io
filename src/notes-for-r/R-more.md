@@ -1,19 +1,26 @@
 # R语言在科研场景中的实际应用
-**R for Rstudio**
+
 ## 1.Plot()
+
 > 绘图指令(plot)，即Basic X-Y Plotting，画出柱形图，散点图，箱形图等。
 ---
+
 ### 1.基本的可视化
+
 #### 画数据
+
 **仍旧以鸢尾数据为例说明各代码**
+
 ```R
 # 加载数据集（包）###################################
 library(datasets)  # Load/unload base packages manually
 ```
+
 ```R
 # LOAD DATA ################################################
 head(iris)
 ```
+
 ```R
 # PLOT DATA WITH PLOT() 用plot命令画出数据
 
@@ -25,6 +32,7 @@ plot(iris$Species, iris$Petal.Width)  # Cat x quant x轴上的分类量化（按
 plot(iris$Petal.Length, iris$Petal.Width)  # Quant pair 变量对量化（横纵坐标都有数据，出散点图）
 plot(iris)  # Entire data frame 整个数据集的变量对比表
 ```
+
 ```R
 # Plot with options 图形可调参数
 plot(iris$Petal.Length, iris$Petal.Width,
@@ -34,13 +42,16 @@ plot(iris$Petal.Length, iris$Petal.Width,
   xlab = "Petal Length", #设置x轴名称
   ylab = "Petal Width") #设置y轴名称
 ```
+
 #### 画函数
+
 ```R
 # PLOT FORMULAS WITH PLOT() 用plot命令画函数################
 plot(cos, 0, 2*pi) #余弦（0～2pi）
 plot(exp, 1, 5)#e的指数（1～5次）
 plot(dnorm, -3, +3)#正态分布（-3～3）
 ```
+
 ```R
 # Formula plot with options
 plot(dnorm, -3, +3,
@@ -50,7 +61,9 @@ plot(dnorm, -3, +3,
   xlab = "z-scores",
   ylab = "Density")
 ```
+
 **清理**
+
 ```R
 # CLEAN UP #################################################
 
@@ -65,11 +78,14 @@ cat("\014")  # ctrl+L
 
 # Clear mind :)
 ```
+
 ### 2.变量间的可视化-散点图
+
 **散点图（Scatterplots）**
 >作用：1.寻找两变量相关性（线性等）；2.发展、延伸趋势（扇形等）；3.异常值
 ---
 准备
+
 ```R
 # LOAD DATASETS PACKAGES 
 library(datasets)  # Load/unload base packages manually
@@ -78,7 +94,9 @@ library(datasets)  # Load/unload base packages manually
 ?mtcars
 head(mtcars) #列出所有数据
 ```
+
 画图
+
 ```R
 # PLOTS 
 # Good to first check univariate distributions
@@ -86,6 +104,7 @@ head(mtcars) #列出所有数据
 hist(mtcars$wt) #hist(数据集$变量)
 hist(mtcars$mpg)
 ```
+
 ```R
 # Basic X-Y plot for two quantitative variables
 plot(mtcars$wt, mtcars$mpg) #R自动识别两个变量，并选择以最合适的散点图输出。
@@ -99,7 +118,9 @@ plot(mtcars$wt, mtcars$mpg,
   xlab = "Weight (in 1000 pounds)",
   ylab = "MPG")
 ```
+
 **清理**
+
 ```R
 # CLEAN UP #################################################
 
@@ -114,11 +135,14 @@ cat("\014")  # ctrl+L
 
 # Clear mind :)
 ```
+
 ### 3.图像的立体化-叠加图
+
 **叠加图（OverlayingPlots）**
 >多角度，多层次且直观的数据解析-像毕加索的画。
 
 准备
+
 ```R
 # INSTALL AND LOAD PACKAGES ################################
 library(datasets)  # Load/unload base packages manually
@@ -127,14 +151,18 @@ library(datasets)  # Load/unload base packages manually
 ?lynx
 head(lynx)
 ```
+
 画图
+
 ```R
 # HISTOGRAM ################################################
 
 # Default #默认的频数分布直方图
 hist(lynx)
 ```
+
 设置图像细节
+
 ```R
 # Add some options
 hist(lynx,
@@ -145,7 +173,9 @@ hist(lynx,
                     "Trappings, 1821-1934"),
      xlab   = "Number of Lynx Trapped")
 ```
+
 **curve()**:添加正态分布曲线
+
 ```R
 # Add a normal distribution 用curve命令增加一个正态分布，在原图基础上对比差异。
 curve(dnorm(x, mean = mean(lynx), sd = sd(lynx)), #使用链接数据的平均值和方差
@@ -153,18 +183,24 @@ curve(dnorm(x, mean = mean(lynx), sd = sd(lynx)), #使用链接数据的平均�
       lwd = 2,           # Line width of 2 pixels 线条设置为两个像素宽
       add = TRUE)        # Superimpose on previous graph 用add来画在上一个图上
 ```
+
 **lines()**:添加核密度估计器（跟随数据分布走向的类钟形曲线）
+
 ```R
 # Add two kernel density estimators 
 lines(density(lynx), col = "blue", lwd = 2) #（标准核密度估计器，颜色，线宽）
 lines(density(lynx, adjust = 3), col = "purple", lwd = 2)#（调横越的平均值/移动平均线（增加3个单位））
 ```
+
 **rug()**:在每个单独数据点下加一条垂直线
+
 ```R
 # Add a rug plot
 rug(lynx, lwd = 2, col = "gray")
 ```
+
 如常清理
+
 ```R
 # CLEAN UP #################################################
 
@@ -179,10 +215,14 @@ cat("\014")  # ctrl+L
 
 # Clear mind :)
 ```
+
 ## 2.hist()
+
 >Histograms,频数分布直方图。帮助寻找：1.分布的形状（单峰、双峰、倾斜）；2.缺口；3.异常值；4.对称性。
 ---
+
 ### 基本的频数分布直方图
+
 ```R
 # BASIC HISTOGRAMS 
 hist(iris$Sepal.Length)     #hist(数据集$对象.变量)，即定向变量。
@@ -190,8 +230,11 @@ hist(iris$Sepal.Width)
 hist(iris$Petal.Length)
 hist(iris$Petal.Width)
 ```
+
 ---
+
 ### 分组的频数分布直方图
+
 ```R
 # HISTOGRAM BY GROUP
 # Put graphs in 3 rows and 1 column 三行一列
@@ -219,14 +262,18 @@ hist(iris$Petal.Width [iris$Species == "virginica"],
   xlab = "",
   col = "blue")
 ```
+
 **以下为示例**
 ![示例](../images/r-hist.png)
 **最后别忘了恢复到默认输出模式！！！**
+
 ```R
 # Restore graphic parameter 回到标准输出模式。
 par(mfrow=c(1, 1))
 ```
+
 ## 3.summary()
+
 >Basic Summary Function in R.
 1.The idea here is something could be done after the Pictures.
 2.Get some precision(精度)
@@ -234,20 +281,25 @@ par(mfrow=c(1, 1))
 代码仍以鸢尾为例：
 
 准备
+
 ```R
 # INSTALL AND LOAD PACKAGES ################################
 library(datasets)  # Load/unload base packages manually
 # LOAD DATA ################################################
 head(iris)
 ```
+
 三种Summary：
+
 ```R
 # SUMMARY()
 summary(iris$Species)       # Categorical variable 每一类别计数
 summary(iris$Sepal.Length)  # Quantitative variable 获得精确的分数分布（上下四分位数，中位数，平均数等）
 summary(iris)               # Entire data frame 综合前二者对整个数据表的最详细总结
 ```
+
 如常清理
+
 ```R
 # CLEAN UP #################################################
 
@@ -264,18 +316,22 @@ cat("\014")  # ctrl+L
 ```
 
 ## 4.Describe()
+
 > For more details-From psych package-来自心理学研究开发的R包。
 
 **可获得的细节：n-样本量；mean-平均值；SD-Standard Deviation-标准差；median-中位数；10% trimmed mean-10%截尾均值；MAD-绝对偏差中位数；min/max；range；skewness-偏度；kurtosis-峰度；SE-标准误差**
 > 在已经生成图片的基础上再想获得详细的数据。
 
 第一步：由pacman载入
+
 ```R
 # Use pacman to load add-on packages as desired
 pacman::p_load(pacman, psych) 
 ```
+
 控制台输出如下即完成
-```
+
+```bash
 > # Use pacman to load add-on packages as desired
 > pacman::p_load(pacman, psych) 
 also installing the dependencies ‘mnormt’, ‘GPArotation’
@@ -284,22 +340,27 @@ trying URL 'https://cran.rstudio.com/bin/macosx/sonoma-arm64/contrib/4.6/GPArota
 trying URL 'https://cran.rstudio.com/bin/macosx/sonoma-arm64/contrib/4.6/psych_2.6.5.tgz'
 
 The downloaded binary packages are in
-	/var/folders/j6/2yxzb2wn2yz9dwy69fkqtg8h0000gn/T//RtmpVzzrfr/downloaded_packages
+ /var/folders/j6/2yxzb2wn2yz9dwy69fkqtg8h0000gn/T//RtmpVzzrfr/downloaded_packages
 
 psych installed
 ```
+
 **开始Describe()**
+
 ```R
 # For quantitative variables only.
 describe(iris$Sepal.Length)  # One quantitative variable-一个定量变量
 describe(iris)               # Entire data frame-整个数据集
 ```
+
 得到如下结果:
-|vars| n | mean | sd | median | trimmed | mad | min | max | range | skew | kurtosis | se |
-|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
-|1| 150 | 5.84 | 0.83 | 5.8 | 5.81 | 1.04 | 4.3 | 7.9 | 3.6 | 0.31 | -0.61 | 0.07 |
+
+|vars| n | mean | sd | median |trimmed| mad | min | max |range| skew |kurtosis| se |
+|----|---|------|----|--------|-------|-----|-----|-----|-----|------|--------|----|
+|1   |150| 5.84 |0.83| 5.8    | 5.81  | 1.04| 4.3 | 7.9 | 3.6 | 0.31 | -0.61  |0.07|
 
 clean
+
 ```R
 # CLEAN UP #################################################
 
