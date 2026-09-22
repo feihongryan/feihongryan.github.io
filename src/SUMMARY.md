@@ -10,3 +10,4 @@
 - [R语言笔记](notes-for-r/README.md)
   - [基本操作](notes-for-r/R0.md)
   - [数据处理与画图](notes-for-r/R-more.md)
+- [医学物理学](notes-for-class&tests/physics.md)
